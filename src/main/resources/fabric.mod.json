@@ -29,6 +29,11 @@
 			"environment": "client"
 		}
 	],
+	"custom": {
+		"loom:injected_interfaces": {
+			"net/minecraft/class_268": ["com/tylermackj/hardcoremp/injects/TeamExtension"]	
+		}
+	},
 	"depends": {
 		"fabricloader": ">=0.16.13",
 		"minecraft": "~1.21.5",

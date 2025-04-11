@@ -24,7 +24,7 @@ abstract class TabMenuMixin {
         if ( ++this.customizationUpdateTimer > 20 ) {
             this.sendToAll(new PlayerListHeaderS2CPacket(
 				Text.literal("Header"),
-				Text.literal("Footer")
+				Text.literal("Footer1\nFooter2\nFooter3")
 			));
             this.customizationUpdateTimer = 0;
         }
