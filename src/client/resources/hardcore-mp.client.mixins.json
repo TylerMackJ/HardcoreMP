@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "com.tylermackj.hardcoremp.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"DamageMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

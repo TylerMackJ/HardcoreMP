@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "hardcore-mp",
+	"version": "${version}",
+	"name": "Hardcore MP",
+	"description": "Shared healthbar for multiplayer hardcore",
+	"authors": [
+		"TylerMackJ"
+	],
+	"contact": {
+		"homepage": "https://tylermackj.com",
+		"sources": "https://github.com/tylermackj/hardcore-mp"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/hardcore-mp/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.tylermackj.hardcoremp.HardcoreMP"
+		],
+		"client": [
+			"com.tylermackj.hardcoremp.HardcoreMPClient"
+		]
+	},
+	"mixins": [
+		"hardcore-mp.mixins.json",
+		{
+			"config": "hardcore-mp.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.13",
+		"minecraft": "~1.21.5",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
