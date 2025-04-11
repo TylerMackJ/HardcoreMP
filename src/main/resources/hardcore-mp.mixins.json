@@ -3,7 +3,8 @@
 	"package": "com.tylermackj.hardcoremp.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"AfterHealMixin"
+		"AfterHealMixin",
+		"TabMenuMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

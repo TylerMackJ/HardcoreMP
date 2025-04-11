@@ -13,7 +13,7 @@ import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.util.Identifier;
 
 import java.util.Random;
-import java.util.function.Predicate;
+import java.util.Timer;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -25,6 +25,9 @@ public class HardcoreMP implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	public static final Random random = new Random();
+
+	public static int attempt = 0;
+	public static int ticks = 0;
 
 	public static BlockPos randomBlockPos() {
 		int randomSize = 1000000;
