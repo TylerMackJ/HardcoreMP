@@ -5,7 +5,9 @@
 	"mixins": [
 		"AfterHealMixin",
 		"TabMenuMixin",
-		"TeamExtensionMixin"
+		"TeamExtensionMixin",
+		"PlayerExtensionMixin",
+		"TeamJoinMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

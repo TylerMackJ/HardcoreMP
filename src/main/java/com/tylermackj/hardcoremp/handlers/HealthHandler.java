@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 
 import com.tylermackj.hardcoremp.HardcoreMP;
 import com.tylermackj.hardcoremp.HardcoreMPEvents;
+import com.tylermackj.hardcoremp.Utils;
 
 public class HealthHandler {
 
@@ -18,8 +19,20 @@ public class HealthHandler {
 			if (entity.isPlayer()) {
 				LOGGER.info("Player " + entity.getName() + " took " + damageTaken + " damage");
 
+				if (entity.getScoreboardTeam() == null) {
+					return;
+				}
+
+				if (Utils.teamLocked(entity.getScoreboardTeam())) {
+					return;
+				}
+
 				PlayerLookup.world((ServerWorld) entity.getWorld()).forEach(player -> {
-					if (player != entity && player.isAlive()) {
+					if (
+						player != entity && 
+						player.isAlive() && 
+						player.getScoreboardTeam() == entity.getScoreboardTeam()
+					) {
 						LOGGER.info("Setting " + player.getName() + " health to " + entity.getHealth());
 						player.setHealth(entity.getHealth());
 					}
@@ -31,8 +44,20 @@ public class HealthHandler {
 			if (entity.isPlayer()) {
 				LOGGER.info("Player " + entity.getName() + " healed for " + amount);
 
+				if (entity.getScoreboardTeam() == null) {
+					return;
+				}
+
+				if (Utils.teamLocked(entity.getScoreboardTeam())) {
+					return;
+				}
+
 				PlayerLookup.world((ServerWorld) entity.getWorld()).forEach(player -> {
-					if (player != entity && player.isAlive()) {
+					if (
+						player != entity && 
+						player.isAlive() && 
+						player.getScoreboardTeam() == entity.getScoreboardTeam()
+					) {
 						LOGGER.info("Setting " + player.getName() + " health to " + entity.getHealth());
 						player.setHealth(entity.getHealth());
 					}
