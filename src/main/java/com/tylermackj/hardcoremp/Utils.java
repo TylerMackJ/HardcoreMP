@@ -1,59 +1,53 @@
 package com.tylermackj.hardcoremp;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
-import org.slf4j.Logger;
-
-import net.minecraft.entity.Entity.RemovalReason;
 import net.minecraft.scoreboard.Team;
-import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 
 public class Utils {
-    public static final Logger LOGGER = HardcoreMP.LOGGER;
 	public static final Random random = new Random();
+    public static final String ZERO_UUID_STRING = "00000000-0000-0000-0000-000000000000";
 
 	private static HashSet<String> lockedTeams = new HashSet<>();
 
-	public static BlockPos randomBlockPos(int radius) {
+	public static BlockPos randomBlockPos(int radius, int y) {
 		return new BlockPos(
 			random.nextInt(-radius, radius),
-			1024,	
+			y,	
 			random.nextInt(-radius, radius)
 		);
 	}
 	
-	public static void checkAttempt(ServerPlayerEntity player) {
+	public static void checkAttemptUuid(ServerPlayerEntity player) {
 		if (player.getScoreboardTeam() == null) {
-			LOGGER.info("Player " + player.getName() + " is not on a team");
+			HardcoreMP.LOGGER.info("Player " + player.getName() + " is not on a team");
 			return;
 		}
 
-		LOGGER.info("Checking if player " + player.getName() + " is on current attempt");
-		if (player.getScoreboardTeam().getAttemptUuid() != player.getAttempt()) {
-			LOGGER.info("Player " + player.getName() + " is not on current attempt");
+		HardcoreMP.LOGGER.info("Comparing teams attempt UUID (" + player.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).getAttemptUuid(player.getWorld()).toString() + ") to players attempt UUID (" + player.getComponent(ComponentRegisterer.PLAYER_DATA).getAttemptUuid() + ")");
+		if (player.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).getAttemptUuid(player.getWorld()) != player.getComponent(ComponentRegisterer.PLAYER_DATA).getAttemptUuid()) {
+			HardcoreMP.LOGGER.info("Player " + player.getName() + " is not on current attempt");
 			lockTeam(player.getScoreboardTeam());
 			player.requestTeleport(0, -1024, 0);	
 		}
 	}
 
 	public static void lockTeam(Team team) {
-		LOGGER.info("Locking team: " + team.getName());
+		HardcoreMP.LOGGER.info("Locking team: " + team.getName());
 		lockedTeams.add(team.getName());
 	}
 
 	public static void unlockTeam(Team team) {
-		LOGGER.info("Unlocking team: " + team.getName());
+		HardcoreMP.LOGGER.info("Unlocking team: " + team.getName());
 		lockedTeams.remove(team.getName());
 	}
 
 	public static Boolean teamLocked(Team team) {
         Boolean locked = lockedTeams.contains(team.getName());
-		LOGGER.info("Checking lock for team " + team.getName() + ": " + locked);
+		HardcoreMP.LOGGER.info("Checking lock for team " + team.getName() + ": " + locked);
 		return locked;
 	}
 }

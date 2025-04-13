@@ -17,7 +17,7 @@ public class HealthHandler {
     public static void registerEvents() {
 		ServerLivingEntityEvents.AFTER_DAMAGE.register((entity, source, baseDamageTaken, damageTaken, blocked) -> {
 			if (entity.isPlayer()) {
-				LOGGER.info("Player " + entity.getName() + " took " + damageTaken + " damage");
+				LOGGER.debug("Player " + entity.getName() + " took " + damageTaken + " damage");
 
 				if (entity.getScoreboardTeam() == null) {
 					return;
@@ -33,7 +33,7 @@ public class HealthHandler {
 						player.isAlive() && 
 						player.getScoreboardTeam() == entity.getScoreboardTeam()
 					) {
-						LOGGER.info("Setting " + player.getName() + " health to " + entity.getHealth());
+						LOGGER.debug("Setting " + player.getName() + " health to " + entity.getHealth());
 						player.setHealth(entity.getHealth());
 					}
 				});
@@ -42,7 +42,7 @@ public class HealthHandler {
 
 		HardcoreMPEvents.AFTER_HEAL.register((entity, amount) -> {
 			if (entity.isPlayer()) {
-				LOGGER.info("Player " + entity.getName() + " healed for " + amount);
+				LOGGER.debug("Player " + entity.getName() + " healed for " + amount);
 
 				if (entity.getScoreboardTeam() == null) {
 					return;
@@ -58,7 +58,7 @@ public class HealthHandler {
 						player.isAlive() && 
 						player.getScoreboardTeam() == entity.getScoreboardTeam()
 					) {
-						LOGGER.info("Setting " + player.getName() + " health to " + entity.getHealth());
+						LOGGER.debug("Setting " + player.getName() + " health to " + entity.getHealth());
 						player.setHealth(entity.getHealth());
 					}
 				});

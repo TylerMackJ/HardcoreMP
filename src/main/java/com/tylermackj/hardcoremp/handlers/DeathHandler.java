@@ -1,19 +1,18 @@
 package com.tylermackj.hardcoremp.handlers;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.scoreboard.Team;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 
-import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
 import org.slf4j.Logger;
 
+import com.jcraft.jorbis.Block;
+import com.tylermackj.hardcoremp.ComponentRegisterer;
 import com.tylermackj.hardcoremp.HardcoreMP;
 import com.tylermackj.hardcoremp.Utils;
 
@@ -32,8 +31,20 @@ public class DeathHandler {
 			}
 			
 			Utils.unlockTeam(newPlayer.getScoreboardTeam());
-			
-			BlockPos spawnPos = newPlayer.getScoreboardTeam().getSpawnPoint(newPlayer);
+
+			// Get spawn position from team
+        	BlockPos spawnPos = newPlayer.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).getSpawnPos(newPlayer.getWorld());
+			// Spawn position could be not set if an attempt has never been started
+			if (spawnPos == BlockPos.ORIGIN) {
+				// Start new attempt and get spawn position again
+        		newPlayer.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).nextAttempt(newPlayer.getWorld());
+        		spawnPos = newPlayer.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).getSpawnPos(newPlayer.getWorld());
+			}
+			// Set player attempt uuid to teams attempt uuid now that player has joined attempt
+			newPlayer.getComponent(ComponentRegisterer.PLAYER_DATA).setAttemptUuid(
+				newPlayer.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).getAttemptUuid(newPlayer.getWorld())
+			);
+			// Teleport player to start of attempt
 			newPlayer.requestTeleport(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
 		});
 
@@ -52,7 +63,7 @@ public class DeathHandler {
 
 				Utils.lockTeam(entity.getScoreboardTeam());
 				
-				entity.getScoreboardTeam().randomizeSpawnPosForWorld(entity.getWorld());
+        		entity.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).nextAttempt(entity.getWorld());
 
 				PlayerLookup.world((ServerWorld) entity.getWorld()).forEach(player -> {
 					if (

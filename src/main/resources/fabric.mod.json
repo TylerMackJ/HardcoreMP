@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"com.tylermackj.hardcoremp.HardcoreMPClient"
+		],
+		"cardinal-components": [
+			"com.tylermackj.hardcoremp.ComponentRegisterer"
 		]
 	},
 	"mixins": [
@@ -30,10 +33,10 @@
 		}
 	],
 	"custom": {
-		"loom:injected_interfaces": {
-			"net/minecraft/class_268": ["com/tylermackj/hardcoremp/injects/TeamExtension"],
-			"net/minecraft/class_1309": ["com/tylermackj/hardcoremp/injects/PlayerExtension"]	
-		}
+		"cardinal-components": [
+			"hardcore-mp:playerdata",
+			"hardcore-mp:teamdata"
+		]
 	},
 	"depends": {
 		"fabricloader": ">=0.16.13",

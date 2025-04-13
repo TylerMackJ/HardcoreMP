@@ -16,7 +16,7 @@ public class JoinHandler {
         ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> {
             if (entity.isPlayer()) {
                 LOGGER.info("Player joined " + entity.getName() );
-                Utils.checkAttempt((ServerPlayerEntity) entity);
+                Utils.checkAttemptUuid((ServerPlayerEntity) entity);
             }
         });
     }
