@@ -23,12 +23,12 @@ public class PlayerData implements IPlayerData, AutoSyncedComponent {
 
     @Override
     public void readFromNbt(NbtCompound tag, WrapperLookup registryLookup) {
-        // this.attemptUuid = UUID.fromString(tag.getString(ATTEMPT_UUID).orElse(Utils.ZERO_UUID_STRING));
+        this.attemptUuid = UUID.fromString(tag.getString(ATTEMPT_UUID).orElse(Utils.ZERO_UUID_STRING));
     }
 
     @Override
     public void writeToNbt(NbtCompound tag, WrapperLookup registryLookup) {
-        // tag.putString(ATTEMPT_UUID, this.attemptUuid.toString());
+        tag.putString(ATTEMPT_UUID, this.attemptUuid.toString());
     }
 
     @Override 
