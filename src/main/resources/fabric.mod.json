@@ -11,7 +11,7 @@
 		"homepage": "https://tylermackj.com",
 		"sources": "https://github.com/tylermackj/hardcore-mp"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/hardcore-mp/icon.png",
 	"environment": "*",
 	"entrypoints": {
