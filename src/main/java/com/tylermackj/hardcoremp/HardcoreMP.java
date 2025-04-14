@@ -24,6 +24,7 @@ public class HardcoreMP implements ModInitializer {
 	public void onInitialize() {
 		ServerLifecycleEvents.SERVER_STARTED.register(minecraftServer -> {
 			HardcoreMP.minecraftServer = Optional.of(minecraftServer);	
+			SpawnPosProvider.INSTANCE.init(minecraftServer.getOverworld());
 		});
 		JoinHandler.registerEvents();
 		HealthHandler.registerEvents();
