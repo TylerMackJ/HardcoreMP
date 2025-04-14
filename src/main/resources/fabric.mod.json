@@ -18,20 +18,10 @@
 		"main": [
 			"com.tylermackj.hardcoremp.HardcoreMP"
 		],
-		"client": [
-			"com.tylermackj.hardcoremp.HardcoreMPClient"
-		],
 		"cardinal-components": [
 			"com.tylermackj.hardcoremp.ComponentRegisterer"
 		]
 	},
-	"mixins": [
-		"hardcore-mp.mixins.json",
-		{
-			"config": "hardcore-mp.client.mixins.json",
-			"environment": "client"
-		}
-	],
 	"custom": {
 		"cardinal-components": [
 			"hardcore-mp:playerdata",

@@ -28,7 +28,6 @@ loom {
 	mods {
 		"hardcore-mp" {
 			sourceSet sourceSets.main
-			sourceSet sourceSets.client
 		}
 	}
 
