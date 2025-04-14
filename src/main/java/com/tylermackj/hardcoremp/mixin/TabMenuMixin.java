@@ -52,11 +52,12 @@ abstract class TabMenuMixin {
                 }
             }
 
-
+            /*
             this.sendToAll(new PlayerListHeaderS2CPacket(
 				Text.literal("Header"),
 				Text.literal(footer.toString())
 			));
+            */
             this.customizationUpdateTimer = 0;
         }
     }
