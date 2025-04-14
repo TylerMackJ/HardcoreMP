@@ -101,7 +101,6 @@ public class TeamData implements ITeamData, AutoSyncedComponent {
 
     @Override
     public void readFromNbt(NbtCompound tag, WrapperLookup registryLookup) {
-        /*
         Optional<NbtCompound> worldAttemptNbt = tag.getCompound(WORLD_ATTEMPT);
 
         if (worldAttemptNbt.isPresent()) {
@@ -123,12 +122,10 @@ public class TeamData implements ITeamData, AutoSyncedComponent {
                 ));
             });
         }
-        */
     }
 
     @Override
     public void writeToNbt(NbtCompound tag, WrapperLookup registryLookup) {
-        /*
         NbtCompound worldAttemptNbt = new NbtCompound();
         this.worldAttempt.keySet().forEach(world -> {
             AttemptData attempt = Optional.ofNullable(this.worldAttempt.get(world)).orElseThrow();
@@ -148,7 +145,6 @@ public class TeamData implements ITeamData, AutoSyncedComponent {
         });
         HardcoreMP.LOGGER.info("Write: " + worldAttemptNbt.toString());
         tag.put(WORLD_ATTEMPT, worldAttemptNbt);
-        */
     }
 
     @Override
