@@ -6,25 +6,17 @@ import java.util.UUID;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 
 import com.tylermackj.hardcoremp.ComponentRegisterer;
-import com.tylermackj.hardcoremp.HardcoreMP;
-import com.tylermackj.hardcoremp.Utils;
+import com.tylermackj.hardcoremp.SpawnPosProvider;
 import com.tylermackj.hardcoremp.interfaces.ITeamData;
 
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.scoreboard.Team;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 
 public class TeamData implements ITeamData, AutoSyncedComponent {
     private final Team provider;
-
-    private static final int RADIUS = 1000000;
-    private static final int MAX_SPAWN_HIGHT = 1024;
 
     private static final String NBT_ATTEMPT = "attempt";
     private static final String NBT_SPAWN_POS = "spawnPos";
@@ -61,7 +53,7 @@ public class TeamData implements ITeamData, AutoSyncedComponent {
 
     private void setAttempt(World world, int attemptCount) {
         this.attempt = new AttemptData(
-            this.randomizeSpawnPos(world),
+            SpawnPosProvider.INSTANCE.getSpawnPos(),
             UUID.randomUUID(),
             attemptCount,
             world.getTime()
@@ -69,29 +61,6 @@ public class TeamData implements ITeamData, AutoSyncedComponent {
 
         ComponentRegisterer.TEAM_DATA.sync(this.provider);
     }   
-
-    public BlockPos randomizeSpawnPos(World world) {
-        Optional<BlockPos> spawnPos = Optional.ofNullable(null);
-
-        do {
-            HardcoreMP.LOGGER.info("Generating spawnpoint for team " + this.provider.getName() + " (" + world.asString() + ")");
-            BlockPos spawnPoint = Utils.randomBlockPos(RADIUS, MAX_SPAWN_HIGHT);
-
-            TagKey<Biome> oceanTag = TagKey.of(RegistryKeys.BIOME, Identifier.of("c:is_ocean"));
-
-            while (world.getBiome(spawnPoint).isIn(oceanTag)) {
-                HardcoreMP.LOGGER.info("Avoiding ocean");
-                spawnPoint = Utils.randomBlockPos(RADIUS, MAX_SPAWN_HIGHT);
-            }
-
-            HardcoreMP.LOGGER.info("Finding ground");
-            spawnPos = BlockPos.findClosest(spawnPoint, 0, MAX_SPAWN_HIGHT, (blockPos) -> {
-                return !world.isAir(blockPos.down());
-            });
-        } while (spawnPos.isEmpty());
-
-        return spawnPos.orElseThrow();
-    } 
 
     @Override
     public boolean isRequiredOnClient() {
