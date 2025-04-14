@@ -2,6 +2,7 @@ package com.tylermackj.hardcoremp.handlers;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
@@ -62,13 +63,22 @@ public class DeathHandler {
 
 				Utils.lockTeam(entity.getScoreboardTeam());
 				
+				long attemptLengthTicks = entity.getWorld().getTime() - entity.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).getAttemptStart();
+				String attemptLengthTS = String.format(
+					"%02d:%02d:%02d", 
+					(attemptLengthTicks / 20 / 60 / 60) % 24,
+					(attemptLengthTicks / 20 / 60 ) % 60,
+					(attemptLengthTicks / 20) % 60
+				);
+
         		entity.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).nextAttempt(entity.getWorld());
 
 				PlayerLookup.world((ServerWorld) entity.getWorld()).forEach(player -> {
+					player.sendMessage(Text.literal("Team " + entity.getScoreboardTeam().getName() + " has died after " + attemptLengthTS + " on attempt " + entity.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).getAttemptCount()));
 					if (
-						player != entity && 
-						player.isAlive() && 
-						player.getScoreboardTeam() == entity.getScoreboardTeam()
+						player != entity &&
+						 player.isAlive() &&
+						player.getScoreboardTeam() == entity.getScoreboardTeam() 
 					) {
 						LOGGER.debug("Killing " + player.getName());
 						player.damage((ServerWorld) player.getWorld(), player.getDamageSources().playerAttack((PlayerEntity) entity), Float.MAX_VALUE);
