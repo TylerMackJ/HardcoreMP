@@ -1,7 +1,5 @@
 package com.tylermackj.hardcoremp.types;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,14 +26,14 @@ public class TeamData implements ITeamData, AutoSyncedComponent {
     private static final int RADIUS = 1000000;
     private static final int MAX_SPAWN_HIGHT = 1024;
 
-    private static final String WORLD_ATTEMPT = "worldAttempt";
-    private static final String SPAWN_POS = "spawnPos";
-    private static final String X = "x";
-    private static final String Y = "y";
-    private static final String Z = "z";
-    private static final String ATTEMPT_UUID = "attemptUuid";
-    private static final String ATTEMPT_COUNT = "attemptCount";
-    private static final String ATTEMPT_START = "attemptStart";
+    private static final String NBT_ATTEMPT = "attempt";
+    private static final String NBT_SPAWN_POS = "spawnPos";
+    private static final String NBT_X = "x";
+    private static final String NBT_Y = "y";
+    private static final String NBT_Z = "z";
+    private static final String NBT_UUID = "uuid";
+    private static final String NBT_COUNT = "count";
+    private static final String NBT_START = "start";
 
     private class AttemptData {
         public BlockPos spawnPos = BlockPos.ORIGIN;
@@ -57,21 +55,17 @@ public class TeamData implements ITeamData, AutoSyncedComponent {
         }
     }
 
-    private Map<Integer, AttemptData> worldAttempt = new HashMap<>();
+    private AttemptData attempt = new AttemptData();
 
     public TeamData(Team provider) { this.provider = provider; }
 
-    private Optional<AttemptData> getWorldAttempt(World world) {
-        return Optional.ofNullable(this.worldAttempt.get(world.hashCode()));
-    }
-
     private void setAttempt(World world, int attemptCount) {
-        this.worldAttempt.put(world.hashCode(), new AttemptData(
+        this.attempt = new AttemptData(
             this.randomizeSpawnPos(world),
             UUID.randomUUID(),
             attemptCount,
             world.getTime()
-        ));
+        );
 
         ComponentRegisterer.TEAM_DATA.sync(this.provider);
     }   
@@ -100,80 +94,70 @@ public class TeamData implements ITeamData, AutoSyncedComponent {
     } 
 
     @Override
+    public boolean isRequiredOnClient() {
+        return false;
+    }
+
+    @Override
     public void readFromNbt(NbtCompound tag, WrapperLookup registryLookup) {
-        Optional<NbtCompound> worldAttemptNbt = tag.getCompound(WORLD_ATTEMPT);
+        Optional<NbtCompound> attemptNbt = tag.getCompound(NBT_ATTEMPT);
 
-        if (worldAttemptNbt.isPresent()) {
-            HardcoreMP.LOGGER.info("Read: " + worldAttemptNbt.toString());
+        if (attemptNbt.isPresent()) {
+            NbtCompound spawnPosNbt = attemptNbt.get().getCompound(NBT_SPAWN_POS).orElseThrow();
 
-            worldAttemptNbt.orElseThrow().getKeys().forEach(world -> {
-                NbtCompound attemptNbt = worldAttemptNbt.orElseThrow().getCompound(world).orElseThrow();
-                NbtCompound spawnPosNbt = attemptNbt.getCompound(SPAWN_POS).orElseThrow();
-
-                this.worldAttempt.put(Integer.parseInt(world), new AttemptData(
-                    new BlockPos(
-                        spawnPosNbt.getInt(X).orElseThrow(),
-                        spawnPosNbt.getInt(Y).orElseThrow(),
-                        spawnPosNbt.getInt(Z).orElseThrow()
-                    ),
-                    UUID.fromString(attemptNbt.getString(ATTEMPT_UUID).orElseThrow()),
-                    attemptNbt.getInt(ATTEMPT_COUNT).orElseThrow(),
-                    attemptNbt.getLong(ATTEMPT_START).orElseThrow()
-                ));
-            });
+            this.attempt = new AttemptData(
+                new BlockPos(
+                    spawnPosNbt.getInt(NBT_X).orElseThrow(),
+                    spawnPosNbt.getInt(NBT_Y).orElseThrow(),
+                    spawnPosNbt.getInt(NBT_Z).orElseThrow()
+                ),
+                UUID.fromString(attemptNbt.get().getString(NBT_UUID).orElseThrow()),
+                attemptNbt.get().getInt(NBT_COUNT).orElseThrow(),
+                attemptNbt.get().getLong(NBT_START).orElseThrow()
+            );
         }
     }
 
     @Override
     public void writeToNbt(NbtCompound tag, WrapperLookup registryLookup) {
-        NbtCompound worldAttemptNbt = new NbtCompound();
-        this.worldAttempt.keySet().forEach(world -> {
-            AttemptData attempt = Optional.ofNullable(this.worldAttempt.get(world)).orElseThrow();
 
-            NbtCompound spawnPosNbt = new NbtCompound();
-            spawnPosNbt.putInt(X, attempt.spawnPos.getX());
-            spawnPosNbt.putInt(Y, attempt.spawnPos.getY());
-            spawnPosNbt.putInt(Z, attempt.spawnPos.getZ());
+        NbtCompound spawnPosNbt = new NbtCompound();
+        spawnPosNbt.putInt(NBT_X, attempt.spawnPos.getX());
+        spawnPosNbt.putInt(NBT_Y, attempt.spawnPos.getY());
+        spawnPosNbt.putInt(NBT_Z, attempt.spawnPos.getZ());
 
-            NbtCompound attemptNbt = new NbtCompound();
-            attemptNbt.put(SPAWN_POS, spawnPosNbt);
-            attemptNbt.putString(ATTEMPT_UUID, attempt.attemptUuid.toString());
-            attemptNbt.putInt(ATTEMPT_COUNT, attempt.attemptCount);
-            attemptNbt.putLong(ATTEMPT_START, attempt.attemptStart);
+        NbtCompound attemptNbt = new NbtCompound();
+        attemptNbt.put(NBT_SPAWN_POS, spawnPosNbt);
+        attemptNbt.putString(NBT_UUID, attempt.attemptUuid.toString());
+        attemptNbt.putInt(NBT_COUNT, attempt.attemptCount);
+        attemptNbt.putLong(NBT_START, attempt.attemptStart);
 
-            worldAttemptNbt.put(world.toString(), attemptNbt);
-        });
-        HardcoreMP.LOGGER.info("Write: " + worldAttemptNbt.toString());
-        tag.put(WORLD_ATTEMPT, worldAttemptNbt);
+        tag.put(NBT_ATTEMPT, attemptNbt);
     }
 
     @Override
-    public BlockPos getSpawnPos(World world) {
-        this.worldAttempt.putIfAbsent(world.hashCode(), new AttemptData());
-        return this.getWorldAttempt(world).orElse(new AttemptData()).spawnPos;
+    public BlockPos getSpawnPos() {
+        return this.attempt.spawnPos;
     }
 
     @Override
-    public UUID getAttemptUuid(World world) {
-        this.worldAttempt.putIfAbsent(world.hashCode(), new AttemptData());
-        return this.getWorldAttempt(world).orElse(new AttemptData()).attemptUuid;
+    public UUID getAttemptUuid() {
+        return this.attempt.attemptUuid;
     }
 
     @Override
-    public int getAttemptCount(World world) {
-        this.worldAttempt.putIfAbsent(world.hashCode(), new AttemptData());
-        return this.getWorldAttempt(world).orElse(new AttemptData()).attemptCount;
+    public int getAttemptCount() {
+        return this.attempt.attemptCount;
     }
 
     @Override
-    public long getAttemptStart(World world) {
-        this.worldAttempt.putIfAbsent(world.hashCode(), new AttemptData());
-        return this.getWorldAttempt(world).orElse(new AttemptData()).attemptStart;
+    public long getAttemptStart() {
+        return this.attempt.attemptStart;
     }
 
     @Override
     public void nextAttempt(World world) {
-        this.setAttempt(world, this.getWorldAttempt(world).orElse(new AttemptData()).attemptCount + 1);
+        this.setAttempt(world, this.attempt.attemptCount + 1);
     }
 
     @Override

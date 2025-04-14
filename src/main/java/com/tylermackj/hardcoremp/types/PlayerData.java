@@ -15,20 +15,25 @@ import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 public class PlayerData implements IPlayerData, AutoSyncedComponent {
     private final Entity provider;
 
-    private static final String ATTEMPT_UUID = "attemptUuid";
+    private static final String NBT_ATTEMPT_UUID = "attemptUuid";
 
     private UUID attemptUuid = UUID.fromString(Utils.ZERO_UUID_STRING);
 
     public PlayerData(Entity provider) { this.provider = provider; }
 
     @Override
+    public boolean isRequiredOnClient() {
+        return false;
+    }
+
+    @Override
     public void readFromNbt(NbtCompound tag, WrapperLookup registryLookup) {
-        this.attemptUuid = UUID.fromString(tag.getString(ATTEMPT_UUID).orElse(Utils.ZERO_UUID_STRING));
+        this.attemptUuid = UUID.fromString(tag.getString(NBT_ATTEMPT_UUID).orElse(Utils.ZERO_UUID_STRING));
     }
 
     @Override
     public void writeToNbt(NbtCompound tag, WrapperLookup registryLookup) {
-        tag.putString(ATTEMPT_UUID, this.attemptUuid.toString());
+        tag.putString(NBT_ATTEMPT_UUID, this.attemptUuid.toString());
     }
 
     @Override 

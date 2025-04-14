@@ -27,8 +27,8 @@ public class Utils {
 			return;
 		}
 
-		HardcoreMP.LOGGER.info("Comparing teams attempt UUID (" + player.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).getAttemptUuid(player.getWorld()).toString() + ") to players attempt UUID (" + player.getComponent(ComponentRegisterer.PLAYER_DATA).getAttemptUuid() + ")");
-		if (player.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).getAttemptUuid(player.getWorld()) != player.getComponent(ComponentRegisterer.PLAYER_DATA).getAttemptUuid()) {
+		HardcoreMP.LOGGER.info("Comparing teams attempt UUID (" + player.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).getAttemptUuid().toString() + ") to players attempt UUID (" + player.getComponent(ComponentRegisterer.PLAYER_DATA).getAttemptUuid() + ")");
+		if (!player.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).getAttemptUuid().equals(player.getComponent(ComponentRegisterer.PLAYER_DATA).getAttemptUuid())) {
 			HardcoreMP.LOGGER.info("Player " + player.getName() + " is not on current attempt");
 			lockTeam(player.getScoreboardTeam());
 			player.requestTeleport(0, -1024, 0);	

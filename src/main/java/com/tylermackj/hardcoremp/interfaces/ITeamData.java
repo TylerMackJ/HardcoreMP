@@ -8,10 +8,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public interface ITeamData extends ComponentV3 {
-    BlockPos getSpawnPos(World world);
-    UUID getAttemptUuid(World world);
-    int getAttemptCount(World world);
-    long getAttemptStart(World world);
+    BlockPos getSpawnPos();
+    UUID getAttemptUuid();
+    int getAttemptCount();
+    long getAttemptStart();
     void nextAttempt(World world);
     void resetAttempts(World world);
 }
