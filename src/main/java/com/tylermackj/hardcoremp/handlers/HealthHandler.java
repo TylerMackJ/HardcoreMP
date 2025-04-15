@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 
 import com.tylermackj.hardcoremp.HardcoreMP;
 import com.tylermackj.hardcoremp.HardcoreMPEvents;
-import com.tylermackj.hardcoremp.Utils;
+import com.tylermackj.hardcoremp.utils.Utils;
 
 public class HealthHandler {
 

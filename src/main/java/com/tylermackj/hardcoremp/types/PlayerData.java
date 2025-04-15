@@ -5,8 +5,8 @@ import java.util.UUID;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 
 import com.tylermackj.hardcoremp.ComponentRegisterer;
-import com.tylermackj.hardcoremp.Utils;
 import com.tylermackj.hardcoremp.interfaces.IPlayerData;
+import com.tylermackj.hardcoremp.utils.Utils;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;

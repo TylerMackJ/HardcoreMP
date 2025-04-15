@@ -3,7 +3,7 @@ package com.tylermackj.hardcoremp.handlers;
 import org.slf4j.Logger;
 
 import com.tylermackj.hardcoremp.HardcoreMP;
-import com.tylermackj.hardcoremp.Utils;
+import com.tylermackj.hardcoremp.utils.Utils;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.server.network.ServerPlayerEntity;
