@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.tylermackj.hardcoremp.handlers.CommandHandler;
 import com.tylermackj.hardcoremp.handlers.DeathHandler;
 import com.tylermackj.hardcoremp.handlers.HealthHandler;
 import com.tylermackj.hardcoremp.handlers.JoinHandler;
@@ -26,6 +27,7 @@ public class HardcoreMP implements ModInitializer {
 			HardcoreMP.minecraftServer = Optional.of(minecraftServer);	
 			SpawnPosProvider.INSTANCE.init(minecraftServer.getOverworld());
 		});
+		CommandHandler.registerCommands();
 		JoinHandler.registerEvents();
 		HealthHandler.registerEvents();
 		DeathHandler.registerEvents();
