@@ -13,6 +13,7 @@ import com.tylermackj.hardcoremp.handlers.CommandHandler;
 import com.tylermackj.hardcoremp.handlers.DeathHandler;
 import com.tylermackj.hardcoremp.handlers.HealthHandler;
 import com.tylermackj.hardcoremp.handlers.JoinHandler;
+import com.tylermackj.hardcoremp.utils.SpawnPosProvider;
 
 public class HardcoreMP implements ModInitializer {
 	public static final String MOD_ID = "hardcore-mp";

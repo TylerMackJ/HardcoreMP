@@ -1,4 +1,4 @@
-package com.tylermackj.hardcoremp;
+package com.tylermackj.hardcoremp.utils;
 
 import java.util.Optional;
 import java.util.Queue;
@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.tylermackj.hardcoremp.utils.Utils;
+import com.tylermackj.hardcoremp.HardcoreMP;
 
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
