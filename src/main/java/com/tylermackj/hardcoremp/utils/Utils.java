@@ -1,6 +1,8 @@
 package com.tylermackj.hardcoremp.utils;
 
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 import com.tylermackj.hardcoremp.ComponentRegisterer;
@@ -14,7 +16,7 @@ public class Utils {
 	public static final Random random = new Random();
     public static final String ZERO_UUID_STRING = "00000000-0000-0000-0000-000000000000";
 
-	private static HashSet<String> lockedTeams = new HashSet<>();
+	private static Map<String, Integer> lockedTeams = new HashMap<>();
 
 	public static BlockPos randomBlockPos(int radius, int y) {
 		return new BlockPos(
@@ -40,16 +42,20 @@ public class Utils {
 
 	public static void lockTeam(Team team) {
 		HardcoreMP.LOGGER.info("Locking team: " + team.getName());
-		lockedTeams.add(team.getName());
+		lockedTeams.computeIfPresent(team.getName(), (name, count) -> { return ++count; });
+		lockedTeams.putIfAbsent(team.getName(), 1);
 	}
 
 	public static void unlockTeam(Team team) {
 		HardcoreMP.LOGGER.info("Unlocking team: " + team.getName());
-		lockedTeams.remove(team.getName());
+		Optional<Integer> newCount = Optional.ofNullable(lockedTeams.computeIfPresent(team.getName(), (name, count) -> { return --count; }));
+		if (newCount.isPresent() && newCount.get() <= 0) {
+			lockedTeams.remove(team.getName());
+		}
 	}
 
 	public static Boolean teamLocked(Team team) {
-        Boolean locked = lockedTeams.contains(team.getName());
+        Boolean locked = lockedTeams.containsKey(team.getName());
 		HardcoreMP.LOGGER.info("Checking lock for team " + team.getName() + ": " + locked);
 		return locked;
 	}
