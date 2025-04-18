@@ -47,7 +47,7 @@ public class JoinHandler {
                         Text.of("\n    ").copy().append(
                             name.displayName.copy().setStyle(
                                 name.displayName.getStyle().withClickEvent(
-                                    new ClickEvent.RunCommand("/hardcore-mp join " + name.name)
+                                    new ClickEvent.RunCommand("/" + HardcoreMP.MOD_ID + " join " + name.name)
                                 ).withHoverEvent(
                                     new HoverEvent.ShowText(Text.of("Join ").copy().append(name.name))
                                 ).withUnderline(true)
@@ -58,11 +58,11 @@ public class JoinHandler {
                 MutableText teamCreateText = Text.of("Create team:").copy().append(
                     Text.of("\n    ").copy().append(
                         Text.of("Manual").copy().setStyle(
-                            Style.EMPTY.withClickEvent(new ClickEvent.SuggestCommand("/hardcore-mp create ")).withUnderline(true)
+                            Style.EMPTY.withClickEvent(new ClickEvent.SuggestCommand("/" + HardcoreMP.MOD_ID + " create ")).withUnderline(true)
                         )
                     ).append("    ").append(
                         Text.of("Automatic").copy().setStyle(
-                            Style.EMPTY.withClickEvent(new ClickEvent.RunCommand("/hardcore-mp create automatic")).withUnderline(true)
+                            Style.EMPTY.withClickEvent(new ClickEvent.RunCommand("/" + HardcoreMP.MOD_ID + " create automatic")).withUnderline(true)
                         )
 
                     )
