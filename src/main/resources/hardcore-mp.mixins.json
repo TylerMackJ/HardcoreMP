@@ -4,8 +4,7 @@
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 		"AfterHealMixin",
-		"TabMenuMixin",
-		"TeamJoinMixin"
+		"TabMenuMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
