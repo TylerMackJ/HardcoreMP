@@ -1,3 +1,7 @@
+# [0.3.0 - 1.21.5](https://github.com/TylerMackJ/HardcoreMP/pull/15)
+
+- [#6](https://github.com/TylerMackJ/HardcoreMP/issues/6) Added custom commands to wrap privileged commands and added chat message to help new players join or create a team
+
 # [0.2.0 - 1.21.5](https://github.com/TylerMackJ/HardcoreMP/pull/9)
 
 - [#5](https://github.com/TylerMackJ/HardcoreMP/issues/5) Added SpawnPosProvider and updated TeamData to take advantage of it
