@@ -6,8 +6,8 @@ import java.util.UUID;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 
 import com.tylermackj.hardcoremp.ComponentRegisterer;
-import com.tylermackj.hardcoremp.SpawnPosProvider;
 import com.tylermackj.hardcoremp.interfaces.ITeamData;
+import com.tylermackj.hardcoremp.utils.SpawnPosProvider;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
