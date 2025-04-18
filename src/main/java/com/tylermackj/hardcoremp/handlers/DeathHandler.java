@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 
 import com.tylermackj.hardcoremp.ComponentRegisterer;
 import com.tylermackj.hardcoremp.HardcoreMP;
-import com.tylermackj.hardcoremp.Utils;
+import com.tylermackj.hardcoremp.utils.Utils;
 
 public class DeathHandler {
 
@@ -74,7 +74,7 @@ public class DeathHandler {
         		entity.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).nextAttempt(entity.getWorld());
 
 				PlayerLookup.world((ServerWorld) entity.getWorld()).forEach(player -> {
-					player.sendMessage(Text.literal("Team " + entity.getScoreboardTeam().getName() + " has died after " + attemptLengthTS + " on attempt " + entity.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).getAttemptCount()));
+					player.sendMessage(Text.literal("Team " + entity.getScoreboardTeam().getDisplayName() + " has died after " + attemptLengthTS + " on attempt " + entity.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).getAttemptCount()));
 					if (
 						player != entity &&
 						 player.isAlive() &&

@@ -8,9 +8,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.tylermackj.hardcoremp.ComponentRegisterer;
 import com.tylermackj.hardcoremp.HardcoreMP;
-import com.tylermackj.hardcoremp.Utils;
+import com.tylermackj.hardcoremp.utils.Utils;
 
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.Team;

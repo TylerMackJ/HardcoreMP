@@ -1,7 +1,10 @@
-package com.tylermackj.hardcoremp;
+package com.tylermackj.hardcoremp.utils;
 
 import java.util.HashSet;
 import java.util.Random;
+
+import com.tylermackj.hardcoremp.ComponentRegisterer;
+import com.tylermackj.hardcoremp.HardcoreMP;
 
 import net.minecraft.scoreboard.Team;
 import net.minecraft.server.network.ServerPlayerEntity;
