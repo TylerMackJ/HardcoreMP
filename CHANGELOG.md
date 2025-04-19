@@ -1,3 +1,8 @@
+# [0.3.1 - 1.21.5](https://github.com/TylerMackJ/HardcoreMP/pull/22)
+
+- [#16](https://github.com/TylerMackJ/HardcoreMP/issues/16) Fixed how team locks are tracked so multiple players can join a team at the same time 
+- [#17](https://github.com/TylerMackJ/HardcoreMP/issues/17) Fixed team name in death message
+
 # [0.3.0 - 1.21.5](https://github.com/TylerMackJ/HardcoreMP/pull/15)
 
 - [#6](https://github.com/TylerMackJ/HardcoreMP/issues/6) Added custom commands to wrap privileged commands and added chat message to help new players join or create a team
