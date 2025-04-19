@@ -6,6 +6,7 @@ import com.tylermackj.hardcoremp.HardcoreMP;
 import com.tylermackj.hardcoremp.utils.Utils;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.ClickEvent;
@@ -85,6 +86,10 @@ public class ConnectionHandler {
                     Utils.checkAttemptUuid((ServerPlayerEntity) entity);
                 }
             }
+        });
+
+        ServerPlayConnectionEvents.DISCONNECT.register((handler, listener) -> {
+            Utils.unlockTeam(handler.getPlayer());
         });
     }
 
