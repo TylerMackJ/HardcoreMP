@@ -1,3 +1,7 @@
+# [0.3.2 - 1.21.5](https://github.com/TylerMackJ/HardcoreMP/pull/25)
+
+- [#16](https://github.com/TylerMackJ/HardcoreMP/issues/16) Changed how teams are locked to fix bug stopping teams from respawning properly
+
 # [0.3.1 - 1.21.5](https://github.com/TylerMackJ/HardcoreMP/pull/22)
 
 - [#16](https://github.com/TylerMackJ/HardcoreMP/issues/16) Fixed how team locks are tracked so multiple players can join a team at the same time 
