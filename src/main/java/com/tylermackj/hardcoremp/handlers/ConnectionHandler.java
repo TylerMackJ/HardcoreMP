@@ -14,7 +14,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
-public class JoinHandler {
+public class ConnectionHandler {
     private static class NamePair implements Comparable<NamePair> {
         Text displayName;
         String name;

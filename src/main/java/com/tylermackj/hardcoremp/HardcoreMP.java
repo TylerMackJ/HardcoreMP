@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import com.tylermackj.hardcoremp.handlers.CommandHandler;
 import com.tylermackj.hardcoremp.handlers.DeathHandler;
 import com.tylermackj.hardcoremp.handlers.HealthHandler;
-import com.tylermackj.hardcoremp.handlers.JoinHandler;
+import com.tylermackj.hardcoremp.handlers.ConnectionHandler;
 import com.tylermackj.hardcoremp.utils.SpawnPosProvider;
 
 public class HardcoreMP implements ModInitializer {
@@ -29,7 +29,7 @@ public class HardcoreMP implements ModInitializer {
 			SpawnPosProvider.INSTANCE.init(minecraftServer.getOverworld());
 		});
 		CommandHandler.registerCommands();
-		JoinHandler.registerEvents();
+		ConnectionHandler.registerEvents();
 		HealthHandler.registerEvents();
 		DeathHandler.registerEvents();
 	}
