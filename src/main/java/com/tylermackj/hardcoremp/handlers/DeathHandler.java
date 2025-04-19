@@ -30,7 +30,7 @@ public class DeathHandler {
 				return;
 			}
 			
-			Utils.unlockTeam(newPlayer.getScoreboardTeam());
+			Utils.unlockTeam(newPlayer);
 
 			// Get spawn position from team
         	BlockPos spawnPos = newPlayer.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).getSpawnPos();
@@ -61,7 +61,7 @@ public class DeathHandler {
 					return;
 				}
 
-				Utils.lockTeam(entity.getScoreboardTeam());
+				Utils.lockTeam(entity);
 				
 				long attemptLengthTicks = entity.getWorld().getTime() - entity.getScoreboardTeam().getComponent(ComponentRegisterer.TEAM_DATA).getAttemptStart();
 				String attemptLengthTS = String.format(
